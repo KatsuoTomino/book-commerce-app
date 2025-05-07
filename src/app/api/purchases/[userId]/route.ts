@@ -11,6 +11,6 @@ export async function GET({ params }: { params: { userId: string } }) {
     return new NextResponse(JSON.stringify(purchases));
   } catch (error) {
     console.error("購入データ取得エラー:", error);
-    return new NextResponse("購入データの取得に失敗しました");
+    return new NextResponse("購入データの取得に失敗しました!");
   }
 }
