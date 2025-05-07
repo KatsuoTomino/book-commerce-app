@@ -7,7 +7,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("STRIPE_SECRET_KEYが設定されていません。");
 }
 
-export async function POST(request: Request, response: Response) {
+export async function POST(request: Request) {
   const { title, price, bookId, userId } = await request.json();
 
   try {
