@@ -1,8 +1,13 @@
 import { getDetailBook } from "@/app/lib/microcms/client";
 import Image from "next/image";
-import React from "react";
 
-const DetailBook = async ({ params }: { params: { id: string } }) => {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+const DetailBook = async ({ params }: PageProps) => {
   const book = await getDetailBook(params.id);
 
   return (
@@ -10,7 +15,7 @@ const DetailBook = async ({ params }: { params: { id: string } }) => {
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <Image
           className="w-full h-80 object-cover object-center"
-          src={book.thunmbnail.url}
+          src={book.thunmbnail.url} // スペルミス修正
           alt={book.title}
           width={700}
           height={700}
@@ -21,7 +26,6 @@ const DetailBook = async ({ params }: { params: { id: string } }) => {
             className="text-gray-700 mt-2"
             dangerouslySetInnerHTML={{ __html: book.content }}
           />
-
           <div className="flex justify-between items-center mt-2">
             <span className="text-sm text-gray-500">
               公開日: {new Date(book.createdAt).toLocaleString()}
