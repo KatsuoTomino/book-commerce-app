@@ -1,24 +1,39 @@
+"use client"; // クライアントコンポーネントとして動作
+
 import { createClient } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
 
-// SupabaseのURLとAPIキーを入力してください
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export default async function Notes() {
-  // "notes"テーブルからデータを取得
-  const { data: notes, error } = await supabase.from("posts").select();
+export default function Notes() {
+  const [notes, setNotes] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  // 取得直後にログを出力して確認
-  console.log("取得したデータ:", notes);
+  useEffect(() => {
+    async function fetchNotes() {
+      const { data, error } = await supabase.from("posts").select();
 
-  // エラーが発生した場合の処理
+      if (error) {
+        console.error("ノートの取得中にエラーが発生しました:", error);
+        setError("ノートの読み込み中に問題が発生しました。");
+      } else {
+        setNotes(data);
+      }
+    }
+
+    fetchNotes();
+  }, []);
+
   if (error) {
-    console.error("ノートの取得中にエラーが発生しました:", error);
-    return <div>ノートの読み込み中に問題が発生しました。</div>;
+    return <div>{error}</div>;
   }
 
-  // JSON形式でデータを表示
+  if (!notes) {
+    return <div>Loading...</div>;
+  }
+
   return <pre>{JSON.stringify(notes, null, 2)}</pre>;
 }
