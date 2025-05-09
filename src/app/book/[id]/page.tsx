@@ -2,17 +2,17 @@ import { getDetailBook } from "@/app/lib/microcms/client";
 import Image from "next/image";
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default async function DetailBook({ params }: PageProps) {
-  if (!params || !params.id) {
+  const resolvedParams = await params; // `Promise<{ id: string }>` を解決
+
+  if (!resolvedParams.id) {
     throw new Error("パラメータ 'id' が見つかりません。");
   }
 
-  const book = await getDetailBook(params.id);
+  const book = await getDetailBook(resolvedParams.id);
 
   return (
     <div className="container mx-auto p-4">
