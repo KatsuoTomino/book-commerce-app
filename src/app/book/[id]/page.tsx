@@ -8,6 +8,10 @@ interface PageProps {
 }
 
 export default async function DetailBook({ params }: PageProps) {
+  if (!params || !params.id) {
+    throw new Error("パラメータ 'id' が見つかりません。");
+  }
+
   const book = await getDetailBook(params.id);
 
   return (
