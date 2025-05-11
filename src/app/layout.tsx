@@ -6,15 +6,18 @@ import { NextAuthProvider } from "./lib/next-auth/provider";
 import { Suspense } from "react";
 import LoadingSpinner from "./loading";
 
+// フォント設定に "display" オプションを追加
 const geistSans = Noto_Sans_JP({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap", // レンダリングのパフォーマンスを最適化
 });
 
 const geistMono = Noto_Sans_JP({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["400"],
+  display: "swap", // こちらも同様に追加
 });
 
 export const metadata: Metadata = {
