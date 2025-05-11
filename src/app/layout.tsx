@@ -9,13 +9,13 @@ import LoadingSpinner from "./loading";
 // フォント設定に "weight" と "subsets" を明確に指定
 const geistSans = Noto_Sans_JP({
   variable: "--font-geist-sans",
-  subsets: ["latin", "japanese"], // 必要に応じて "japanese" も追加
+  subsets: ["latin"], // 必要に応じて "japanese" も追加
   display: "swap",
 });
 
 const geistMono = Noto_Sans_JP({
   variable: "--font-geist-mono",
-  subsets: ["latin", "japanese"], // 必要に応じて設定
+  subsets: ["latin"], // 必要に応じて設定
   weight: ["400"],
   display: "swap",
 });
