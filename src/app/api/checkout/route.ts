@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-if (!process.env.STRIPE_SECRET_KEY) {
+// 環境変数を安全にチェックする
+const secretKey = process.env.STRIPE_SECRET_KEY;
+if (!secretKey) {
   throw new Error("STRIPE_SECRET_KEYが設定されていません。");
 }
+
+// Stripeインスタンスを初期化
+const stripe = new Stripe(secretKey);
 
 export async function POST(request: Request) {
   const { title, price, bookId, userId } = await request.json();
@@ -24,9 +27,9 @@ export async function POST(request: Request) {
             product_data: {
               name: title,
             },
-            unit_amount: Math.round(price),
+            unit_amount: Math.round(price), // 単価を整数に変換
           },
-          quantity: 1,
+          quantity: 1, // 数量指定
         },
       ],
       mode: "payment",
@@ -34,9 +37,12 @@ export async function POST(request: Request) {
       cancel_url: `http://localhost:3000`,
     });
     return NextResponse.json({ checkout_url: session.url });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
+  } catch (err) {
     console.error("Checkout セッション作成中にエラー:", err);
-    return NextResponse.json({ error: err.message });
+    // エラー処理を強化
+    return NextResponse.json({
+      error:
+        err instanceof Error ? err.message : "不明なエラーが発生しました。",
+    });
   }
 }
