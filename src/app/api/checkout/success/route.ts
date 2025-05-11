@@ -14,7 +14,7 @@ export const POST = async (request: Request) => {
     const existingPurchase = await prisma.purchase.findFirst({
       where: {
         userId: session.client_reference_id!,
-        bookId: session.metadata?.bookId,
+        bookId: session.metadata?.bookId ?? "defaultBookId", // 安全なフォールバック
       },
     });
     if (!existingPurchase) {
