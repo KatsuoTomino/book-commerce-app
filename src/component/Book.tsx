@@ -46,7 +46,7 @@ const Book = ({ book, isPurchased }: BookProps) => {
 
   const handlePurchaseClick = () => {
     if (isPurchased) {
-      alert("その商品は購入済みです!");
+      alert("その商品は購入済みです!!");
     } else {
       setShowModal(true);
     }
