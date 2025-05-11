@@ -34,6 +34,7 @@ export async function POST(request: Request) {
       cancel_url: `http://localhost:3000`,
     });
     return NextResponse.json({ checkout_url: session.url });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     console.error("Checkout セッション作成中にエラー:", err);
     return NextResponse.json({ error: err.message });
