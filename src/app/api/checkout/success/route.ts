@@ -39,7 +39,7 @@ export const POST = async (request: Request) => {
     } else {
       return NextResponse.json({ message: "すでに購入済みです" });
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "An unexpected error occurred." });
   }
 };
