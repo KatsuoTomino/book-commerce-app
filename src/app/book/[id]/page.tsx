@@ -9,7 +9,7 @@ export default async function DetailBook({ params }: PageProps) {
   const resolvedParams = await params; // `Promise<{ id: string }>` を解決
 
   if (!resolvedParams.id) {
-    throw new Error("パラメータ 'id' が見つかりません");
+    throw new Error("パラメータ 'id' が見つかりません..");
   }
 
   const book = await getDetailBook(resolvedParams.id);
