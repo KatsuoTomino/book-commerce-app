@@ -11,11 +11,10 @@ type BookProps = {
   isPurchased: boolean;
 };
 
-// eslint-disable-next-line react/display-name
 const Book = ({ book, isPurchased }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
   const { data: session } = useSession();
-  const user: any = session?.user;
+  const user = session?.user as { id: string } | undefined; // 型を直接指定
   const router = useRouter();
 
   const startCheckout = async () => {
