@@ -14,7 +14,7 @@ export const POST = async (request: Request) => {
     const existingPurchase = await prisma.purchase.findFirst({
       where: {
         userId: session.client_reference_id!,
-        bookId: session.metadata?.bookId!,
+        bookId: session.metadata?.bookId,
       },
     });
     if (!existingPurchase) {
@@ -28,7 +28,7 @@ export const POST = async (request: Request) => {
     } else {
       return NextResponse.json({ message: "すでに購入済みです" });
     }
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json(err);
   }
 };
